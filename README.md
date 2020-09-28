@@ -14,6 +14,7 @@ Based on:
 
 ## 참고
 
+- **X<sub>E</sub>L<sub>A</sub>T<sub>E</sub>X을 사용해 컴파일해야 합니다.**
 - 원본 솔루션과 약간의 차이가 있습니다.
   - 원본 솔루션의 고정폭 폰트는 [PF Din Mono](https://www.myfonts.com/fonts/parachute/pf-din-mono/)라는 유료 폰트로 개인적으로 라이센스를 소유하고 있기 때문에, [DM Mono](https://fonts.google.com/specimen/DM+Mono)로 교체했습니다.
   - 기타 포매팅이 약간씩 다른 부분이 존재합니다.
