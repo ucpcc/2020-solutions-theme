@@ -6,6 +6,8 @@ Based on:
 - [Execushares](https://github.com/hamaluik/Beamer-Theme-Execushares)
 - [Sogang ICPC Team](https://acm.soagng.ac.kr) 강의 자료
 
+풀이의 저작권은 각 문제 작성자에게 있습니다.
+
 ## 테마 사용 예
 
 - [UCPC 2020](main.pdf)
