@@ -1,0 +1,73 @@
+\section{J. 관광 사업}
+
+\begin{frame} % No title at first slide
+    \sectiontitle{J}{관광 사업}
+    \sectionmeta{
+        \texttt{divide\_and\_conquer}\\
+        출제진 의도 -- \textbf{\color{acruby}Challenging}
+    }
+    \begin{itemize}
+        \item 제출 25번, 정답 3팀 (정답률 20.00\%)
+        \item 처음 푼 팀: \textbf{여기가월파2020인가요} (월파, 치러, 왔어요), 146분
+        \item 출제자: \texttt{moonrabbit2}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\textbf{J}. 관광 사업}
+    \begin{itemize}
+        \item 정점 $u$를 잡고, $u$를 지나는 경로만 고려해 봅시다. $u$는 센트로이드로 잡읍시다.
+        \item $D_v$를 $u$에서부터 거리라 하면, $(D_v+D_w)(C_v+C_w)$의 최댓값을 구하면 됩니다.
+        \item 단, $v$와 $w$는 같은 서브트리에서 오면 안 되고, 다른 집합에 있어야 합니다. $u$ 또한 서브트리로 취급합시다.
+        \item 위 조건들을 무시하면, $(-D_v,-C_v)$중 하나를 왼쪽 아래 꼭지점으로, $(D_w,C_w)$중 하나를 오른쪽 위 꼭지점으로 하는 직사각형의 최대 넓이를 구하는 문제가 됩니다. 이는 전처리 후 분할 정복 최적화로 해결할 수 있음이 잘 알려져 있습니다. 17WF Money for Nothing 문제를 참조하세요.
+    \end{itemize}
+\end{frame}
+\begin{frame}{\textbf{J}. 관광 사업}
+    \begin{itemize}
+        \item 다른 집합 조건은 $A$집합, $B$집합 각각을 따로 저장해두면 됩니다.
+        \item 그러나 다른 서브트리 조건은 많이 어렵습니다.
+    \end{itemize}
+\end{frame}
+\begin{frame}{\textbf{J}. 관광 사업}
+    \begin{itemize}
+        \item 분할 정복을 통해 다른 서브트리를 강제할 수 있습니다.
+        \item 두 집합 $S$와 $T$를 만들어, 각 서브트리를 적절히 $S$와 $T$에 나누면, $S$-$T$ 경로를 고려한 후, $S$와 $T$ 각각에서 다시 해결하면 됩니다.
+        \item $S$-$T$ 경로를 고려할 땐 $S \cap A$의 정점-$T \cap B$의 정점 경로를 고려한 후, $S \cap B$의 정점-$T \cap A$의 정점 경로를 고려하면 됩니다.
+        \item 단, 총 서브트리의 개수가 1개 이하가 되면 종료합니다.
+    \end{itemize}
+\end{frame}
+\begin{frame}{\textbf{J}. 관광 사업}
+    \begin{itemize}
+        \item 새 서브트리가 들어오면, $S$와 $T$중 크기가 더 작은 것에 넣는다고 합시다.
+        \item 모든 서브트리의 크기가 1이라면 이 방식을 이용하면 \complexity{N \log ^2 N}로 모든 경로를 고려할 수 있습니다. $\log N$ 이 추가로 붙는 이유는 최대 넓이 직사각형을 구하는 과정이 포함되기 때문입니다.
+    \end{itemize}
+\end{frame}
+\begin{frame}{\textbf{J}. 관광 사업}
+    사실, 서브트리들의 크기와 상관 없이 \complexity{N \log ^2 N}에 할 수 있습니다!
+    \begin{itemize}
+        \item 가장 큰 서브트리의 크기가 $\frac{N}{2}$ 이상일 경우, 가장 먼저 큰 서브트리를 처리하면 한 집합은 그 서브트리만, 나머지 집합은 나머지 서브트리가 들어갑니다. 첫 번째 집합은 다음 재귀에서 아무 처리 없이 종료되고, 두 번째 집합은 크기가 $\frac{N}{2}$ 이하입니다.
+        \item 가장 큰 서브트리도 크기가 $\frac{N}{2}$ 이하라면, 두 집합 각각의 크기가 최대 $\frac{3N}{4}$입니다. 한 서브트리를 넣을 때 두 집합간의 크기 차이가 최대 $\frac{N}{2}$이기 때문입니다.
+    \end{itemize}
+    이 방법을 통해 문제를 $M=\sum_{i=1}^{Q} (N_A+N_B)$이라 할 때, \complexity{N \log N + M \log ^3 N}에 해결할 수 있습니다. 느려 보이지만 어째서인지 굉장히 빠르게 돕니다. 
+\end{frame}
+\begin{frame}{\textbf{J}. 관광 사업}
+    \begin{itemize}
+        \item 두 집합을 만드는 것은 센트로이드 분할 단계에서 함께 할 수 있습니다.
+        \item 우선 센트로이드 $u$를 한 끝점으로 하는 모든 쿼리들을 처리합시다.
+        \item 이제 서브트리들을 적절히 집합 $S$와 $T$로 나눕니다. 새 서브트리를 집합에 넣을 때에는 둘 중 작은 크기의 집합에 넣으면 각 서브트리의 크기는 앞선 풀이와 같은 이유로 $\frac{3N}{4}$ 입니다. 센트로이드에서는 모든 서브트리의 크기가 $\frac{N}{2}$ 이하이기 때문입니다.
+        \item 같은 방법으로 $S$-$T$ 경로를 고려합니다.
+        \item $u$를 두 집합 각각에 넣으면 두 집합은 연결되어 다시 트리를 이룹니다. 각 트리들에 대해 다시 해결하면 됩니다.
+    \end{itemize}
+\end{frame}
+\begin{frame}{\textbf{J}. 관광 사업}
+    \begin{itemize}
+        \item $u$를 따로 고려하는 이유는 각 정점이 \complexity{ \log N }번만 방문된다는 것이 사실이 아니고, 그 이유는 두 집합 모두에 들어가는 $u$ 때문이기에 이를 미리 처리하는 것입니다. 이 처리 없이는 각 쿼리마다 $u$를 너무 자주 고려하게 됩니다.
+        \item 비슷한 이유로 현재 트리에서 인접한 간선만 저장하지 않으면 센트로이드 분할 과정에서 시간 초과가 납니다.
+        \item 쿼리를 오프라인으로 처리할 수 있으므로 센트로이드 분할 과정에서 함께 처리하는 것이 편합니다.
+    \end{itemize}
+\end{frame}
+\begin{frame}{\textbf{J}. 관광 사업}
+    \begin{itemize}
+        \item $M=\sum_{i=1}^{Q} (N_A+N_B)$이라 할 때, 시간복잡도는 \complexity{N \log N + M \log ^2 N} 입니다.
+        \item 트리를 거리가 유지되는 이진 트리로 만들어서 해결하는 방법도 있습니다. 같은 시간복잡도를 가지며, 상수가 많이 커서 최적화가 필요할 수 있습니다. 자세한 설명은 생략합니다.
+    \end{itemize}
+\end{frame}

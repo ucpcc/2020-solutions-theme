@@ -1,0 +1,94 @@
+\section{F. 애완 트리}
+
+\begin{frame} % No title at first slide
+    \sectiontitle{F}{애완 트리}
+    \sectionmeta{
+        \texttt{dynamic\_programming}\\
+        출제진 의도 -- \textbf{\color{acdiamond}Hard}
+    }
+    \begin{itemize}
+        \item 제출 71번, 정답 10팀 (정답률 14.09\%)
+        \item 처음 푼 팀: \textbf{정우팬클럽} (회장, 부회장, 정우), 39분
+        \item 출제자: \texttt{moonrabbit2}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\textbf{F}. 애완 트리}
+    \begin{itemize}
+        \item 우선, $S$나 $E$가 $400(N-1)$보다 크면 의미가 없습니다. 더 크면 $400(N-1)$로 바꿔줍시다.
+        \item 지름이 $S$ 이상 $E$ 이하인 경우의 수는 (지름이 $S$ 이상인 경우의 수)-(지름이 $E+1$ 이상인 경우의 수) 입니다.
+        \item 지름이 $X$ 이상인 경우의 수를 구할 수 있으면 문제를 해결할 수 있습니다.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\textbf{F}. 애완 트리}
+    트리DP를 이용해 지름이 $X$ 이상인 경우의 수를 구합니다.
+    \begin{itemize}
+        \item $D_{u,d}$는 $u$의 서브트리에서 지름이 $X$ 미만이고 최대 깊이는 $d$인 경우의 수입니다.
+        \item $E_u$는 $u$의 서브트리에서 지름이 $X$ 이상인 경우의 수입니다.
+    \end{itemize}
+    루트를 1로 잡으면 답은 $E_1$입니다. $d$는 최대 $X$이므로 DP테이블의 공간복잡도는 \complexity{NX}입니다.
+\end{frame}
+
+\begin{frame}{\textbf{F}. 애완 트리}
+    현재 서브트리 위에 $[L,R]$ 간선이 생기면 DP값들이 갱신됩니다. 새 값들을 $D'_u$와 $E'_u$라 합시다. 다음과 같은 방법으로 $D'_u$와 $E'_u$를 구할 수 있습니다.
+    \begin{itemize}
+        \item $[L,R]$ 범위의 각 $D$에 대해, $d+D<X$이면 $D'_{u,d+D}$에 $D_{u,d}$를 더합니다. 그렇지 않으면 $E'_u$에 더합니다.
+        \item $E'_u$에 $(R-L+1)E_u$를 더합니다.
+    \end{itemize}
+    이 과정을 $N-1$번 수행하므로 총 시간복잡도는 \complexity{400NX}입니다.
+\end{frame}
+
+
+\begin{frame}{\textbf{F}. 애완 트리}
+    자식에서 올라온 DP값과 기존의 DP값을 합쳐야 합니다. $D_u$와 $E_u$, $D_v$와 $E_v$를 합쳐 $D'_u$와 $E'_u$가 되었다고 합시다.
+    \begin{itemize}
+        \item $d_1+d_2<X$라면 $D'_{u,\max\left(d_1,d_2\right)}$에 $D_{u,d_1} D_{v,d_2}$를 더합니다. 그렇지 않으면 $E'_u$에 더합니다.
+        \item $E'_u$에 $D_{u,d}E_v$를 더합니다.
+        \item $E'_u$에 $D_{v,d}E_u$를 더합니다.
+        \item $E'_u$에 $E_u E_v$를 더합니다.
+    \end{itemize}
+    이 과정을 $N-1$번 수행하므로 총 시간복잡도는 \complexity{NX^2}입니다.
+    
+    이 과정에서 현재 DP테이블의 크기를 저장해 놓아 필요한 부분만 계산하면 \complexity{400NX}입니다. 증명은 생략합니다.
+\end{frame}
+
+\begin{frame}{\textbf{F}. 애완 트리}
+    너무 느립니다. 각 부분을 최적화합시다.
+    \begin{itemize}
+        \item 아이디어는 $D'_{u,d}$와 $E'_u$ 값들을 구할 때 $D_{u,d}$와 $E_u$ 각각에 대해 새로운 값들을 순회하는 대신, $D'_{u,d}$와 $E'_u$에 더해지는 값들을 구해 $D'_u$를 순회하는 것입니다.
+        \item 해당하는 $D_{u,d}$의 $d$값들이 구간을 이뤄, 전처리 후 $O(1)$에 $D_u$에서 $d$의 구간에 대한 구간 합 쿼리를 구할 수 있음을 이용합니다.
+        \item 편의상 $D_{u,[l,r]}=\sum_{i=l}^{r} D_{u,i}$로 정의합니다. $l>r$이라면 이 값은 $0$입니다.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\textbf{F}. 애완 트리}
+    새 $[L,R]$간선이 생겼을 때 $D'_u$와 $E'_u$를 빠르게 구해봅시다.
+    \begin{itemize}
+        \item $D'_{u,d}=D_{u,[\max\left(0,d-R\right),d-L]}$입니다.
+        \item $(R-L+1)E_u$를 $E'_u$에 더하는 것은 똑같이 하면 됩니다.
+        \item $[\max\left(L,X\right),X-1+R]$ 범위의 $d$에 대해, $E'_u$에 $D_{u,[\max\left(0,d-R\right),d-L]}$을 더합니다.
+    \end{itemize}
+    총 시간복잡도는 \complexity{NX}입니다.
+\end{frame}
+
+\begin{frame}{\textbf{F}. 애완 트리}
+    두 DP테이블을 합쳤을 때 $D'_u$와 $E'_u$를 빠르게 구해봅시다.
+    \begin{itemize}
+        \item $D'_{u,d}$에 $D_{u,d}D_{v,[0,\min\left(d,X-1-d\right)]}$와 $D_{u,[0,\min\left(d-1,X-1-d\right)]}D_{v,d}$를 더합니다. 이는 두 서브트리 중 하나에서는 반드시 최대 깊이가 $d$인 트리가 있어야 하기 때문입니다.
+        \item 각 $d$에 대해 $D_{u,d}D_{v,X-d,X-1}$을 $E'_u$에 더합니다.
+        \item $E'_u$에 $D_{u,d}E_v$를 더합니다.
+        \item $E'_u$에 $D_{v,d}E_u$를 더합니다.
+        \item $E'_u$에 $E_u E_v$를 더합니다.
+        
+    \end{itemize}
+    총 시간복잡도는 \complexity{NX}입니다.
+\end{frame}
+
+\begin{frame}{\textbf{F}. 애완 트리}
+    $X$를 $S$와 $E+1$로 두고 두 번 진행하므로, 최종적으로 총 시간복잡도는 \complexity{(S+E)N}입니다.
+    
+    시간제한이 여유롭게 주어졌지만 매우 비효율적으로 코딩했을 경우 시간 초과가 날 수 있습니다.
+    
+    이 풀이 외에도 지름의 중점의 위치를 고정한 후 열심히 경우의 수를 구하는 풀이 등도 가능합니다.
+\end{frame}

@@ -1,0 +1,60 @@
+\section{L. 피자 배틀}
+
+\begin{frame} % No title at first slide
+    \sectiontitle{L}{피자 배틀}
+    \sectionmeta{
+        \texttt{dynamic\_programming}\\
+        출제진 의도 -- \textbf{\color{acplatinum}Medium}
+    }
+    \begin{itemize}
+        \item 제출 299번, 정답 63팀 (정답률 21.07\%)
+        \item 처음 푼 팀: \textbf{여기가월파2020인가요} (월파, 치러, 왔어요), 10분
+        \item 출제자: \texttt{16silver}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\textbf{L}. 피자 배틀}
+    \begin{itemize}
+        \item 게임을 진행하면서 현재까지 고른 피자 조각의 크기 합의 차이는 클 수 없습니다.
+        \item 적게 먹은 쪽이 피자 조각을 고르면서 균형이 맞춰지기 때문입니다.
+    \end{itemize}
+    \begin{block}{현재까지 두 사람이 고른 피자 조각 크기 차이는 가장 큰 조각의 크기 $M$ 이하이다.}
+    Proof. 만약 어떤 순간에 X가 Y보다 $M+a$ 더 먹었다고 하자. 그렇다면 X가 가장 최근에 먹은 조각을 고르기 전에도 X는 최소 $a$만큼 Y보다 앞서고 있었다. 하지만 그렇다면 Y가 자신에게 할당된 피자 조각을 먼저 다 먹었을 것이므로, X가 조각을 먼저 고르는 상황이 올 수 없다. 이는 모순이다.
+    \end{block}
+\end{frame}
+
+\begin{frame}{\textbf{L}. 피자 배틀}
+    \begin{itemize}
+        \item $dp(i,j,k):$ 남은 조각이 $i$부터 시계 방향으로 연속한 $j$개의 조각들이고, 현재까지 고른 피자 조각의 크기 합의 차가 $k$일 때, 두 사람이 최선의 플레이를 했을 때 최종적으로 $(\textrm{선공이 먹은 양})-(\textrm{후공이 먹은 양})$
+        \begin{itemize}
+            \item 점화식 설명: $k$에 따라 누가 피자 조각을 고를지가 정해집니다. 선공의 입장에서는 값이 클수록 피자를 많이 먹는 거고, 후공의 입장에서는 값이 작을수록 피자를 많이 먹는 것입니다.
+        \end{itemize}
+        \item 이 때 $k$는 $-M$부터 $M$의 값을 가질 수 있습니다. (사실 $-M$은 가질 수 없습니다)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\textbf{L}. 피자 배틀}
+    $dp(i,j,k):$ 남은 조각이 $i$부터 시계 방향으로 연속한 $j$개의 조각들이고, 현재까지 고른 피자 조각의 크기 합의 차가 $k$일 때, 두 사람이 최선의 플레이를 했을 때 최종적으로 $(\textrm{선공이 먹은 양})-(\textrm{후공이 먹은 양})$
+    
+    \begin{align*}
+        &dp\left(i,j,k\right)\\
+        &=\begin{cases}
+            k & \textrm{if } j=0 \\
+            \max (dp(i+1,j-1,k+c(i)),dp(i,j-1,k+c(i+j-1))) & \textrm{if } j \neq 0 \textrm{ and } k \leq 0 \\
+            \min (dp(i+1,j-1,k-c(i)),dp(i,j-1,k-c(i+j-1))) & \textrm{if } j \neq 0 \textrm{ and } k > 0 \\
+        \end{cases}
+    \end{align*}
+
+    모든 index는 $\textrm{mod}\ N$으로 따집니다.
+\end{frame}
+
+\begin{frame}{\textbf{L}. 피자 배틀}
+    \begin{itemize}
+        \item 시간복잡도는 \complexity{N^2 M}입니다.
+        \item 그대로 짜면 공간복잡도도 \complexity{N^2 M}입니다.
+        \item 여기까지만 해도 문제를 풀 수는 있습니다.
+        \item Bottom-Up 구조로, 남은 조각 수 $j$에 슬라이딩 윈도우를 적용하면 \complexity{NM}으로 줄어듭니다.
+        \item 실제로 코드를 돌려본 결과 메모리를 최적화하니 수행 시간이 반 정도로 줄어들었습니다.
+    \end{itemize}
+\end{frame}
+

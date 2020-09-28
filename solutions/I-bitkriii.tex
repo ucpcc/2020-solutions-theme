@@ -1,0 +1,845 @@
+\section{I. 빛의 전사 크리퓨어}
+
+\begin{frame} % No title at first slide
+    \sectiontitle{I}{빛의 전사 크리퓨어}
+    \sectionmeta{
+        \texttt{greedy}\\
+        출제진 의도 -- \textbf{\color{acdiamond}Hard}
+    }
+    \begin{itemize}
+        \item 제출 124번, 정답 16팀 (정답률 12.90\%)
+        \item 처음 푼 팀: \textbf{1211789} (김현수, 신승원, 최석환), 45분
+        \item 출제자: \texttt{pichulia}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\textbf{I}. 빛의 전사 크리퓨어}
+    풀이를 열심히 준비해서 오니까 검수진한테
+    
+    \vspace{18pt}
+    
+    \texttt{"이거 너무 Well-Known이라서 사전지식을 아는 사람만 풀둣"}
+    
+    \vspace{18pt}
+    
+    이라고 구박받은 문제입니다.ㅠㅠ
+\end{frame}
+
+\begin{frame}{\textbf{I}. 빛의 전사 크리퓨어}
+    검수진이 알려준 Well-Known 풀이가 있고
+    
+    사전지식 없이 풀리는 재미있는 Ad-hoc 풀이가 있습니다.
+    
+    \vspace{18pt}
+    
+    두 풀이 모두 유용하기 때문에 모두 설명하겠습니다.
+\end{frame}
+
+\begin{frame}{\textbf{I}. 빛의 전사 크리퓨어}
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[]
+\def \r {1.25}
+\def \ascale {1.1}
+\def \bscale {1.2}
+\def \leftcx {-2.0}
+\def \leftcy {0.0}
+\def \rightcx {2.0}
+\def \rightcy {0.0}
+\def \as {112.5}
+\def \ae {22.5}
+\def \bs {67.5}
+\def \be {-45}
+\def \cs {-22.5}
+\def \ce {-135}
+\def \ds {-85}
+\def \de {-185}
+\draw (\leftcx, \leftcy) circle [radius=\r];
+\draw (\rightcx, \rightcy) circle [radius=\r];
+\draw[draw=ucpc-orange] ($(\leftcx, \leftcy) + (\as:\r)$) -- ($(\leftcx, \leftcy) + (\ae:\r)$);
+\draw[draw=ucpc-orange] ($(\leftcx, \leftcy) + (\bs:\r)$) -- ($(\leftcx, \leftcy) + (\be:\r)$);
+\draw[draw=ucpc-orange] ($(\leftcx, \leftcy) + (\cs:\r)$) -- ($(\leftcx, \leftcy) + (\ce:\r)$);
+\draw[draw=ucpc-orange] ($(\leftcx, \leftcy) + (\ds:\r)$) -- ($(\leftcx, \leftcy) + (\de:\r)$);
+\node at (0, 0) {->};
+\draw[|-|,draw=ucpc-orange] ($(\rightcx, \rightcy) + (\as:\r*\ascale)$) arc (\as:\ae:\r * \ascale);
+\draw[|-|,draw=ucpc-orange] ($(\rightcx, \rightcy) + (\bs:\r*\bscale)$) arc (\bs:\be:\r * \bscale);
+\draw[|-|,draw=ucpc-orange] ($(\rightcx, \rightcy) + (\cs:\r*\ascale)$) arc (\cs:\ce:\r * \ascale);
+\draw[|-|,draw=ucpc-orange] ($(\rightcx, \rightcy) + (\ds:\r*\bscale)$) arc (\ds:\de:\r * \bscale);
+\end{tikzpicture}%
+\end{figure}
+    
+    문제에서 고무줄이라고 되있는 것들을 어떤 시작점과 끝점이 있는 '구간'으로 변환해서 생각할 수 있습니다.
+    
+    \vspace{18pt}
+    
+    이제 본 문제는 $N$개의 구간이 있고, 그 구간을 모두 파괴하는 빔의 최소값을 구하는 문제가 됩니다.
+\end{frame}
+
+\begin{frame}{\textbf{I}. 빛의 전사 크리퓨어}
+    빔이 구간의 말단 지점에 스쳐도 구간을 파괴하므로, 구간의 중간이 아니라 시작점 or 끝점에 발사하는 것이 항상 이득입니다.
+    
+    \vspace{18pt}
+    
+    본 문제 해설에서는 구간의 시작점에서 끝점으로의 방향을 시계방향으로 생각했으며, 항상 구간의 끝점에 빔을 쏘는 것으로 설명할 것입니다.
+\end{frame}
+
+\begin{frame}{\textbf{I}. 빛의 전사 크리퓨어}
+    직선일 때에는 조금 전형적이면서 유명한 Greedy 해법으로 풀립니다.
+    
+    \vspace{18pt}
+    
+    \begin{enumerate}
+        \item 시작점을 기준으로 구간을 정렬한다.
+        \item 위치를 조금씩 증가시켜가다가, 최초로 만나는 끝점이 있으면 빔을 발사한다.
+        
+        빔을 발사한 지점보다 시작점이 더 작은 구간은 모두 파괴당한다.
+        
+        \item 빔을 발사한 지점 이후부터 다시 시작해서 위 과정을 반복한다.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{\textbf{I}. 빛의 전사 크리퓨어}
+    \begin{figure}[h]
+\centering
+\begin{tikzpicture}[]
+\def \h {0.35}
+\def \scale {0.016}
+\def \as {0}
+\def \ae {108}
+\def \bs {25}
+\def \be {85}
+\def \cs {47}
+\def \ce {154}
+\def \ds {141}
+\def \de {245}
+\def \es {175}
+\def \ee {211}
+\def \fs {226}
+\def \fe {272}
+\def \leftcx {-5.0}
+\def \leftcy {0.0}
+\def \midcx {0.0}
+\def \midcy {0.0}
+\def \rightcx {5.0}
+\def \rightcy {0.0}
+\draw[draw=black] (\leftcx + \as * \scale, \leftcy - \h) -- (\leftcx + \ae * \scale, \leftcy - \h);
+\draw[draw=gray] (\leftcx + \bs * \scale, \leftcy + 0)  -- (\leftcx + \be * \scale, \leftcy + 0);
+\draw[draw=gray] (\leftcx + \cs * \scale, \leftcy + \h) -- (\leftcx + \ce * \scale, \leftcy + \h);
+\draw[draw=gray] (\leftcx + \ds * \scale, \leftcy - \h) -- (\leftcx + \de * \scale, \leftcy - \h);
+\draw[draw=gray] (\leftcx + \es * \scale, \leftcy + 0)  -- (\leftcx + \ee * \scale, \leftcy + 0);
+\draw[draw=gray] (\leftcx + \fs * \scale, \leftcy + 0)  -- (\leftcx + \fe * \scale, \leftcy + 0);
+
+\draw[draw=black, thick] (\leftcx + \as * \scale, \leftcy - \h * 1.5) -- (\leftcx + \as * \scale, \leftcy + \h * 1.5);
+
+\draw[draw=black] (\midcx + \as * \scale, \midcy - \h) -- (\midcx + \ae * \scale, \midcy - \h);
+\draw[draw=black] (\midcx + \bs * \scale, \midcy + 0)  -- (\midcx + \be * \scale, \midcy + 0);
+\draw[draw=gray] (\midcx + \cs * \scale, \midcy + \h) -- (\midcx + \ce * \scale, \midcy + \h);
+\draw[draw=gray] (\midcx + \ds * \scale, \midcy - \h) -- (\midcx + \de * \scale, \midcy - \h);
+\draw[draw=gray] (\midcx + \es * \scale, \midcy + 0)  -- (\midcx + \ee * \scale, \midcy + 0);
+\draw[draw=gray] (\midcx + \fs * \scale, \midcy + 0)  -- (\midcx + \fe * \scale, \midcy + 0);
+
+\draw[draw=black, thick] (\midcx + \bs * \scale, \midcy - \h * 1.5) -- (\midcx + \bs * \scale, \midcy + \h * 1.5);
+
+\draw[draw=black] (\rightcx + \as * \scale, \rightcy - \h) -- (\rightcx + \ae * \scale, \rightcy - \h);
+\draw[draw=black] (\rightcx + \bs * \scale, \rightcy + 0)  -- (\rightcx + \be * \scale, \rightcy + 0);
+\draw[draw=black] (\rightcx + \cs * \scale, \rightcy + \h) -- (\rightcx + \ce * \scale, \rightcy + \h);
+\draw[draw=gray] (\rightcx + \ds * \scale, \rightcy - \h) -- (\rightcx + \de * \scale, \rightcy - \h);
+\draw[draw=gray] (\rightcx + \es * \scale, \rightcy + 0)  -- (\rightcx + \ee * \scale, \rightcy + 0);
+\draw[draw=gray] (\rightcx + \fs * \scale, \rightcy + 0)  -- (\rightcx + \fe * \scale, \rightcy + 0);
+
+\draw[draw=black, thick] (\rightcx + \cs * \scale, \rightcy - \h * 1.5) -- (\rightcx + \cs * \scale, \rightcy + \h * 1.5);
+\node at (-0.25, 0) {->};
+\node at (4.75, 0) {->};
+\end{tikzpicture}%
+
+\centering
+\begin{tikzpicture}[]
+\def \h {0.35}
+\def \scale {0.016}
+\draw[->] (5.0 + 272*0.5*\scale, \h) -- (5.0 + 272*0.5*\scale, 0) -- (-5.0 + 272*0.5*\scale, 0) -- (-5.0 + 272*0.5*\scale, -\h);
+\end{tikzpicture}%
+
+\centering
+\begin{tikzpicture}[]
+\def \h {0.35}
+\def \scale {0.016}
+\def \as {0}
+\def \ae {108}
+\def \bs {25}
+\def \be {85}
+\def \cs {47}
+\def \ce {154}
+\def \ds {141}
+\def \de {245}
+\def \es {175}
+\def \ee {211}
+\def \fs {226}
+\def \fe {272}
+\def \leftcx {-5.0}
+\def \leftcy {0.0}
+\def \midcx {0.0}
+\def \midcy {0.0}
+\def \rightcx {5.0}
+\def \rightcy {0.0}
+\draw[draw=red, dashed] (\leftcx + \as * \scale, \leftcy - \h) -- (\leftcx + \ae * \scale, \leftcy - \h);
+\draw[draw=red, dashed] (\leftcx + \bs * \scale, \leftcy + 0)  -- (\leftcx + \be * \scale, \leftcy + 0);
+\draw[draw=red, dashed] (\leftcx + \cs * \scale, \leftcy + \h) -- (\leftcx + \ce * \scale, \leftcy + \h);
+\draw[draw=gray] (\leftcx + \ds * \scale, \leftcy - \h) -- (\leftcx + \de * \scale, \leftcy - \h);
+\draw[draw=gray] (\leftcx + \es * \scale, \leftcy + 0)  -- (\leftcx + \ee * \scale, \leftcy + 0);
+\draw[draw=gray] (\leftcx + \fs * \scale, \leftcy + 0)  -- (\leftcx + \fe * \scale, \leftcy + 0);
+
+\draw[draw=red, thick] (\leftcx + \be * \scale, \leftcy - \h * 1.5) -- (\leftcx + \be * \scale, \leftcy + \h * 1.5);
+
+\draw[draw=red, dashed] (\midcx + \as * \scale, \midcy - \h) -- (\midcx + \ae * \scale, \midcy - \h);
+\draw[draw=red, dashed] (\midcx + \bs * \scale, \midcy + 0)  -- (\midcx + \be * \scale, \midcy + 0);
+\draw[draw=red, dashed] (\midcx + \cs * \scale, \midcy + \h) -- (\midcx + \ce * \scale, \midcy + \h);
+\draw[draw=black] (\midcx + \ds * \scale, \midcy - \h) -- (\midcx + \de * \scale, \midcy - \h);
+\draw[draw=gray] (\midcx + \es * \scale, \midcy + 0)  -- (\midcx + \ee * \scale, \midcy + 0);
+\draw[draw=gray] (\midcx + \fs * \scale, \midcy + 0)  -- (\midcx + \fe * \scale, \midcy + 0);
+
+\draw[draw=black, thick] (\midcx + \ds * \scale, \midcy - \h * 1.5) -- (\midcx + \ds * \scale, \midcy + \h * 1.5);
+
+\draw[draw=red, dashed] (\rightcx + \as * \scale, \rightcy - \h) -- (\rightcx + \ae * \scale, \rightcy - \h);
+\draw[draw=red, dashed] (\rightcx + \bs * \scale, \rightcy + 0)  -- (\rightcx + \be * \scale, \rightcy + 0);
+\draw[draw=red, dashed] (\rightcx + \cs * \scale, \rightcy + \h) -- (\rightcx + \ce * \scale, \rightcy + \h);
+\draw[draw=black] (\rightcx + \ds * \scale, \rightcy - \h) -- (\rightcx + \de * \scale, \rightcy - \h);
+\draw[draw=black] (\rightcx + \es * \scale, \rightcy + 0)  -- (\rightcx + \ee * \scale, \rightcy + 0);
+\draw[draw=gray] (\rightcx + \fs * \scale, \rightcy + 0)  -- (\rightcx + \fe * \scale, \rightcy + 0);
+
+\draw[draw=black, thick] (\rightcx + \es * \scale, \rightcy - \h * 1.5) -- (\rightcx + \es * \scale, \rightcy + \h * 1.5);
+\node at (-0.25, 0) {->};
+\node at (4.75, 0) {->};
+\end{tikzpicture}%
+
+\centering
+\begin{tikzpicture}[]
+\def \h {0.35}
+\def \scale {0.016}
+\draw[->] (5.0 + 272*0.5*\scale, \h) -- (5.0 + 272*0.5*\scale, 0) -- (-5.0 + 272*0.5*\scale, 0) -- (-5.0 + 272*0.5*\scale, -\h);
+\end{tikzpicture}%
+
+\centering
+\begin{tikzpicture}[]
+\def \h {0.35}
+\def \scale {0.016}
+\def \as {0}
+\def \ae {108}
+\def \bs {25}
+\def \be {85}
+\def \cs {47}
+\def \ce {154}
+\def \ds {141}
+\def \de {245}
+\def \es {175}
+\def \ee {211}
+\def \fs {226}
+\def \fe {272}
+\def \leftcx {-5.0}
+\def \leftcy {0.0}
+\def \midcx {0.0}
+\def \midcy {0.0}
+\def \rightcx {5.0}
+\def \rightcy {0.0}
+\draw[draw=red, dashed] (\leftcx + \as * \scale, \leftcy - \h) -- (\leftcx + \ae * \scale, \leftcy - \h);
+\draw[draw=red, dashed] (\leftcx + \bs * \scale, \leftcy + 0)  -- (\leftcx + \be * \scale, \leftcy + 0);
+\draw[draw=red, dashed] (\leftcx + \cs * \scale, \leftcy + \h) -- (\leftcx + \ce * \scale, \leftcy + \h);
+\draw[draw=red, dashed] (\leftcx + \ds * \scale, \leftcy - \h) -- (\leftcx + \de * \scale, \leftcy - \h);
+\draw[draw=red, dashed] (\leftcx + \es * \scale, \leftcy + 0)  -- (\leftcx + \ee * \scale, \leftcy + 0);
+\draw[draw=gray] (\leftcx + \fs * \scale, \leftcy + 0)  -- (\leftcx + \fe * \scale, \leftcy + 0);
+
+\draw[draw=red, thick] (\leftcx + \ee * \scale, \leftcy - \h * 1.5) -- (\leftcx + \ee * \scale, \leftcy + \h * 1.5);
+
+\draw[draw=red, dashed] (\midcx + \as * \scale, \midcy - \h) -- (\midcx + \ae * \scale, \midcy - \h);
+\draw[draw=red, dashed] (\midcx + \bs * \scale, \midcy + 0)  -- (\midcx + \be * \scale, \midcy + 0);
+\draw[draw=red, dashed] (\midcx + \cs * \scale, \midcy + \h) -- (\midcx + \ce * \scale, \midcy + \h);
+\draw[draw=red, dashed] (\midcx + \ds * \scale, \midcy - \h) -- (\midcx + \de * \scale, \midcy - \h);
+\draw[draw=red, dashed] (\midcx + \es * \scale, \midcy + 0)  -- (\midcx + \ee * \scale, \midcy + 0);
+\draw[draw=black] (\midcx + \fs * \scale, \midcy + 0)  -- (\midcx + \fe * \scale, \midcy + 0);
+
+\draw[draw=black, thick] (\midcx + \fs * \scale, \midcy - \h * 1.5) -- (\midcx + \fs * \scale, \midcy + \h * 1.5);
+
+\draw[draw=red, dashed] (\rightcx + \as * \scale, \rightcy - \h) -- (\rightcx + \ae * \scale, \rightcy - \h);
+\draw[draw=red, dashed] (\rightcx + \bs * \scale, \rightcy + 0)  -- (\rightcx + \be * \scale, \rightcy + 0);
+\draw[draw=red, dashed] (\rightcx + \cs * \scale, \rightcy + \h) -- (\rightcx + \ce * \scale, \rightcy + \h);
+\draw[draw=red, dashed] (\rightcx + \ds * \scale, \rightcy - \h) -- (\rightcx + \de * \scale, \rightcy - \h);
+\draw[draw=red, dashed] (\rightcx + \es * \scale, \rightcy + 0)  -- (\rightcx + \ee * \scale, \rightcy + 0);
+\draw[draw=red, dashed] (\rightcx + \fs * \scale, \rightcy + 0)  -- (\rightcx + \fe * \scale, \rightcy + 0);
+
+\draw[draw=red, thick] (\rightcx + \fe * \scale, \rightcy - \h * 1.5) -- (\rightcx + \fe * \scale, \rightcy + \h * 1.5);
+\node at (-0.25, 0) {->};
+\node at (4.75, 0) {->};
+\end{tikzpicture}%
+    \end{figure}
+\end{frame}
+
+\begin{frame}{\textbf{I}. 빛의 전사 크리퓨어}
+    이렇게 진행하는 것이 항상 최소한의 빔을 사용합니다.
+    
+    \vspace{18pt}
+    
+    왜냐하면 끝점보다 더 큰 지점에 빔을 발사하면 그 구간이 파괴되지 않은 채로 남으며,
+    
+    끝점보다 더 작은 지점에 빔을 발사하는 것은 항상 동률이거나 손해이기 때문입니다.
+\end{frame}
+
+\begin{frame}{\textbf{I}. 빛의 전사 크리퓨어}
+    편의상 정렬 등의 각종 전처리는 이미 완료된 상태라고 가정하겠습니다.
+    
+    \vspace{18pt}
+    
+    이 풀이의 정답을 $M$이라고 했을 때
+    
+    단순비교로 \complexity{N}에 풀리는 해법이 있고
+    
+    Segment Tree 등의 자료구조를 써서 \complexity{M \log N}로 푸는 해법이 있고
+    
+    전처리를 적절하게 잘 해놔서 \complexity{M}에 풀리는 해법이 있습니다.
+    
+\end{frame}
+
+\begin{frame}{\textbf{I}. 빛의 전사 크리퓨어}
+    \begin{block}{Well-Known 풀이 - Sparse Table}\end{block}
+    
+    \begin{figure}[h]
+\centering
+\begin{tikzpicture}[]
+\def \h {0.35}
+\def \scale {0.016}
+\def \as {0}
+\def \ae {108}
+\def \bs {25}
+\def \be {85}
+\def \cs {47}
+\def \ce {154}
+\def \ds {141}
+\def \de {245}
+\def \es {175}
+\def \ee {211}
+\def \fs {226}
+\def \fe {272}
+\def \leftcx {-5.0}
+\def \leftcy {0.0}
+\def \midcx {0.0}
+\def \midcy {0.0}
+\def \rightcx {5.0}
+\def \rightcy {0.0}
+%\draw[draw=black] (\leftcx + \as * \scale, \leftcy - \h) -- (\leftcx + \ae * \scale, \leftcy - \h);
+%\draw[draw=black] (\leftcx + \bs * \scale, \leftcy + 0)  -- (\leftcx + \be * \scale, \leftcy + 0);
+%\draw[draw=black] (\leftcx + \cs * \scale, \leftcy + \h) -- (\leftcx + \ce * \scale, \leftcy + \h);
+%\draw[draw=black] (\leftcx + \ds * \scale, \leftcy - \h) -- (\leftcx + \de * \scale, \leftcy - \h);
+%\draw[draw=black] (\leftcx + \es * \scale, \leftcy + 0)  -- (\leftcx + \ee * \scale, \leftcy + 0);
+%\draw[draw=black] (\leftcx + \fs * \scale, \leftcy + 0)  -- (\leftcx + \fe * \scale, \leftcy + 0);
+
+\draw[draw=red, dashed] (\midcx + \as * \scale, \midcy - \h) -- (\midcx + \ae * \scale, \midcy - \h);
+\draw[draw=red, dashed] (\midcx + \bs * \scale, \midcy + 0)  -- (\midcx + \be * \scale, \midcy + 0);
+\draw[draw=red, dashed] (\midcx + \cs * \scale, \midcy + \h) -- (\midcx + \ce * \scale, \midcy + \h);
+\draw[draw=black] (\midcx + \ds * \scale, \midcy - \h) -- (\midcx + \de * \scale, \midcy - \h);
+\draw[draw=black] (\midcx + \es * \scale, \midcy + 0)  -- (\midcx + \ee * \scale, \midcy + 0);
+\draw[draw=black] (\midcx + \fs * \scale, \midcy + 0)  -- (\midcx + \fe * \scale, \midcy + 0);
+
+\draw[draw=red, thick] (\midcx + \be * \scale, \midcy - \h * 1.5) -- (\midcx + \be * \scale, \midcy + \h * 1.5);
+\node[text=red, scale=0.75] at (\midcx + \be * \scale, \midcy - \h * 2.5) {$i$};
+
+\draw[draw=red, dashed] (\rightcx + \as * \scale, \rightcy - \h) -- (\rightcx + \ae * \scale, \rightcy - \h);
+\draw[draw=red, dashed] (\rightcx + \bs * \scale, \rightcy + 0)  -- (\rightcx + \be * \scale, \rightcy + 0);
+\draw[draw=red, dashed] (\rightcx + \cs * \scale, \rightcy + \h) -- (\rightcx + \ce * \scale, \rightcy + \h);
+\draw[draw=teal, dashed] (\rightcx + \ds * \scale, \rightcy - \h) -- (\rightcx + \de * \scale, \rightcy - \h);
+\draw[draw=teal, dashed] (\rightcx + \es * \scale, \rightcy + 0)  -- (\rightcx + \ee * \scale, \rightcy + 0);
+\draw[draw=black] (\rightcx + \fs * \scale, \rightcy + 0)  -- (\rightcx + \fe * \scale, \rightcy + 0);
+
+\draw[draw=teal, thick] (\rightcx + \ee * \scale, \rightcy - \h * 1.5) -- (\rightcx + \ee * \scale, \rightcy + \h * 1.5);
+\node[text=teal, scale=0.75] at (\rightcx + \ee * \scale, \rightcy - \h * 2.5) {$next\left(i\right)$};
+
+%\node at (-0.25, 0) {->};
+\node at (4.75, 0) {->};
+\end{tikzpicture}%
+    \end{figure}
+    
+    \vspace{14pt}
+    
+    $i$번 구간의 끝점에 빔을 발사했을 때, 살아남은 구간들 중 끝점의 좌표가 가장 작은 구간의 번호를 구합니다.
+    
+    빔 한방에 모든 구간이 파괴되서 답이 $1$이 되는 경우를 주의합시다.
+    
+\end{frame}
+
+\begin{frame}{\textbf{I}. 빛의 전사 크리퓨어}
+    $i$번 구간의 끝점에 빔을 1회 발사했을 때 다음 구간의 번호를 알고 있으므로,
+    
+    \vspace{18pt}
+
+    이를 활용해서 $i$번 구간의 끝점에 빔을 2회, 4회, 8회, $\cdots$, 131072회 발사했을 때 다음 구간의 번호를 구할 수 있습니다.
+    
+    (이런 식으로 데이터를 저장해놓는 기법을 Sparse Table 이라고 부른다고 합니다.)
+    
+    \vspace{18pt}
+
+    원형이기 때문에 빙빙 돌 수 있는데, 이는 현재 구간의 번호를 구하는 과정이 몇바퀴를 돌았는지를 같이 저장해서 해결할 수 있습니다.
+\end{frame}
+
+\begin{frame}{\textbf{I}. 빛의 전사 크리퓨어}
+    이제 각 $1$번부터 $N$번 구간의 끝점에서 빔 발사를 시작해, 한바퀴를 도는 데 필요한 빔의 발사 횟수를 \complexity{\log N}만에 구할 수 있게 됩니다.
+    
+    \vspace{18pt}
+    
+    전체 시간복잡도는\complexity{N \log N} 공간복잡도는 \complexity{N \log N}
+\end{frame}
+
+
+\begin{frame}{\textbf{I}. 빛의 전사 크리퓨어}
+    \begin{block}{사전지식이 필요없는 풀이 - 비둘기집의 원리와 믿음($\cdots$)}\end{block}
+    이 문제를 풀기 위해선 최소 \complexity{M \log N}만에 직선문제를 해결할 수 있어야합니다.
+
+    대략적인 흐름은 다음과 같습니다.
+    
+    \vspace{18pt}
+    
+    \begin{enumerate}
+        \item 적당힌 곳을 '첫 발사 지점' 으로 지정하고, 그곳에 빔을 발사한다.
+        \item 파괴되지 않고 살아남은 구간들에 대해서 직선 풀이를 \complexity{M \log N}만에 해결한다.
+        \item 이 과정을 \complexity{N / M}번 반복한다.
+    \end{enumerate}
+    
+    \vspace{18pt}
+    
+    각 구간의 끝점인 $N$ 개의 지점이 '첫 발사 지점'의 후보지점들입니다.
+    
+    이 후보지점들 중 정답이 나오도록 \complexity{N / M}개의 지점을 뽑아내는게 쉽지 않습니다.
+\end{frame}
+
+\begin{frame}{\textbf{I}. 빛의 전사 크리퓨어}
+    짜잘한 증명은 잠시 생략하고 결론만 적어넣으면 다음과 같습니다.
+    
+    \vspace{18pt}
+    
+    \begin{theorem}
+        다른 구간의 끝점이 가장 적게 포함된 구간에는 끝점이 최대 \complexity{N/M} 개 포함되어있다.
+        
+        이 끝점들 중 하나에 정답이 되는 첫 발사 지점이 존재한다.
+    \end{theorem}
+\end{frame}
+
+\begin{frame}{\textbf{I}. 빛의 전사 크리퓨어}
+    이 명제가 사실이라면, 각 구간을 좌표압축해서 구간의 범위를 \complexity{N}으로 줄인 뒤,
+    
+    $e-s$ 값이 가장 작은 구간을 하나 찾은 다음에
+    
+    $s$ 부터 $e$ 까지 빔을 한번씩 발사해 보면서 \complexity{M \log N} 만에 직선문제를 해결하면 정답이 됩니다.
+    
+    \vspace{18pt}
+    
+    와! 신기해라!
+\end{frame}
+
+\begin{frame}{\textbf{I}. 빛의 전사 크리퓨어}
+    결론이 매우 재밌지만 그것을 증명하는 과정은 아주 험난합니다.ㅠㅠ
+    
+    \vspace{18pt}
+    
+    이를 증명하기 전에 다음과 같은 6개의 명제가 먼저 증명되어야 합니다.
+\end{frame}
+
+\begin{frame}{\textbf{I}. 빛의 전사 크리퓨어}
+    \begin{block}{Lemma 1} \textbf{적당히 아무 지점에 빔을 발사해서 구한 답이 $M$이면, 전체 문제의 정답은 $M$ 또는 $M-1$이다.}\end{block}
+    \begin{block}{Lemma 2} 만약 답이 $M-1$이 되는 첫 발사 지점이 있는 경우, 그 $M-1$개의 빔 중 어느 지점을 첫 발사 지점으로 잡아도 $M-1$개의 빔으로 모든 구간을 파괴할 수 있다.\end{block}
+    \begin{block}{Lemma 3} 다른 구간을 완전히 포함하는 어떤 구간이 존재하는 경우, 그 구간을 지워도 답이 변하지 않는다. 이렇게 답에 영향을 주는 구간만 남긴 경우, '시작점' 기준으로 정렬한 것과 '끝점' 기준으로 정렬한 것의 순서가 같다.\end{block}
+\end{frame}
+
+\begin{frame}{\textbf{I}. 빛의 전사 크리퓨어}
+    \begin{block}{Lemma 4} 답에 영향을 주는 구간만 남긴 경우, 각 구간은 $M$개의 영역 중 최대 $2$개의 영역에 걸쳐서 존재한다.\end{block}
+    \begin{block}{Lemma 5} 답에 영향을 주는 구간만 남긴 경우, 구간 내에 끝점의 개수가 $2N/M$개 이하인 구간이 존재한다.\end{block}
+    \begin{block}{Lemma 6} 구간 내에 끝점의 개수가 $2N/M$개 이하인 구간이 존재한다.\end{block}
+\end{frame}
+
+\begin{frame}{\textbf{I}. 빛의 전사 크리퓨어}
+    \textcolor{ucpc-orange}{Lemma}들끼리 잘 뭉치면 \textcolor{ucpc-orange}{Theorem}의 결론이 나옵니다.
+    
+    \vspace{18pt}
+    
+    다른건 다 그려려니 하는데
+    
+    \textcolor{ucpc-orange}{Lemma 1} 이 아마 직관적이지 않을 것입니다.
+    
+    대략적인 증명을 설명하겠습다.
+\end{frame}
+
+\begin{frame}{\textbf{I}. 빛의 전사 크리퓨어}
+    \begin{proof}
+    
+    \begin{figure}[h]
+\centering
+\begin{tikzpicture}[]
+\def \h {0.35}
+\def \r {1.25}
+\def \scale {0.016}
+\def \ascale {1.1}
+\def \bscale {1.2}
+\def \cscale {1.3}
+\def \as {0}
+\def \ae {108}
+\def \bs {25}
+\def \be {85}
+\def \cs {47}
+\def \ce {154}
+\def \ds {141}
+\def \de {245}
+\def \es {175}
+\def \ee {211}
+\def \fs {226}
+\def \fe {272}
+\def \gs {263}
+\def \ge {396}
+\def \hs {290}
+\def \he {340}
+\def \aas {70-\as}
+\def \aae {70-\ae}
+\def \bas {70-\bs}
+\def \bae {70-\be}
+\def \cas {70-\cs}
+\def \cae {70-\ce}
+\def \das {70-\ds}
+\def \dae {70-\de}
+\def \eas {70-\es}
+\def \eae {70-\ee}
+\def \fas {70-\fs}
+\def \fae {70-\fe}
+\def \gas {70-\gs}
+\def \gae {70-\ge}
+\def \has {70-\hs}
+\def \hae {70-\he}
+
+\def \leftcx {-5.0}
+\def \leftcy {0.0}
+\def \midcx {0.0}
+\def \midcy {0.0}
+\def \rightcx {5.0}
+\def \rightcy {0.0}
+
+\draw (\leftcx, \leftcy) circle [radius=\r];
+\draw[|-|,draw=ucpc-orange] ($(\leftcx, \leftcy) + (\aas:\r*\ascale)$) arc (\aas:\aae:\r * \ascale);
+\draw[|-|,draw=ucpc-orange] ($(\leftcx, \leftcy) + (\bas:\r*\bscale)$) arc (\bas:\bae:\r * \bscale);
+\draw[|-|,draw=ucpc-orange] ($(\leftcx, \leftcy) + (\cas:\r*\cscale)$) arc (\cas:\cae:\r * \cscale);
+\draw[|-|,draw=ucpc-orange] ($(\leftcx, \leftcy) + (\das:\r*\ascale)$) arc (\das:\dae:\r * \ascale);
+\draw[|-|,draw=ucpc-orange] ($(\leftcx, \leftcy) + (\eas:\r*\bscale)$) arc (\eas:\eae:\r * \bscale);
+\draw[|-|,draw=ucpc-orange] ($(\leftcx, \leftcy) + (\fas:\r*\bscale)$) arc (\fas:\fae:\r * \bscale);
+\draw[|-|,draw=gray, dashed] ($(\leftcx, \leftcy) + (\gas:\r*\cscale)$) arc (\gas:\gae:\r * \cscale);
+\draw[|-|,draw=gray, dashed] ($(\leftcx, \leftcy) + (\has:\r*\ascale)$) arc (\has:\hae:\r * \ascale);
+
+\draw[draw=black, thick] (\leftcx, \leftcy) -- (\leftcx, \leftcy + \r * \cscale + 0.1 * \r);
+\node[text=black, scale=0.75] at (\leftcx, \leftcy + \r * \cscale + 0.2 * \r) {$s$};
+
+\draw (\midcx, \midcy) circle [radius=\r];
+\draw[|-|,draw=red, dashed] ($(\midcx, \midcy) + (\aas:\r*\ascale)$) arc (\aas:\aae:\r * \ascale);
+\draw[|-|,draw=red, dashed] ($(\midcx, \midcy) + (\bas:\r*\bscale)$) arc (\bas:\bae:\r * \bscale);
+\draw[|-|,draw=red, dashed] ($(\midcx, \midcy) + (\cas:\r*\cscale)$) arc (\cas:\cae:\r * \cscale);
+\draw[|-|,draw=teal, dashed] ($(\midcx, \midcy) + (\das:\r*\ascale)$) arc (\das:\dae:\r * \ascale);
+\draw[|-|,draw=teal, dashed] ($(\midcx, \midcy) + (\eas:\r*\bscale)$) arc (\eas:\eae:\r * \bscale);
+\draw[|-|,draw=brown, dashed] ($(\midcx, \midcy) + (\fas:\r*\bscale)$) arc (\fas:\fae:\r * \bscale);
+\draw[|-|,draw=gray, dashed] ($(\midcx, \midcy) + (\gas:\r*\cscale)$) arc (\gas:\gae:\r * \cscale);
+\draw[|-|,draw=gray, dashed] ($(\midcx, \midcy) + (\has:\r*\ascale)$) arc (\has:\hae:\r * \ascale);
+
+\draw[draw=black, thick] (\midcx, \midcy) -- (\midcx, \midcy + \r * \cscale + 0.1 * \r);
+\node[text=black, scale=0.75] at (\midcx, \midcy + \r * \cscale + 0.2 * \r) {$s$};
+
+\draw[draw=red, thick] (\midcx, \midcy) -- ($(\midcx, \midcy) + (\bae:\r*\cscale + \r*0.1)$);
+\node[text=red, scale=0.75] at ($(\midcx, \midcy) + (\bae:\r*\cscale + \r*0.2)$) {$1$};
+
+\draw[draw=teal, thick] (\midcx, \midcy) -- ($(\midcx, \midcy) + (\eae:\r*\cscale + \r*0.1)$);
+\node[text=teal, scale=0.75] at ($(\midcx, \midcy) + (\eae:\r*\cscale + \r*0.2)$) {$2$};
+
+\draw[draw=brown, thick] (\midcx, \midcy) -- ($(\midcx, \midcy) + (\fae:\r*\cscale + \r*0.1)$);
+\node[text=brown, scale=0.75] at ($(\midcx, \midcy) + (\fae:\r*\cscale + \r*0.2)$) {$3$};
+
+\draw (\rightcx, \rightcy) circle [radius=\r];
+\draw[|-|,draw=red, dashed] ($(\rightcx, \rightcy) + (\aas:\r*\ascale)$) arc (\aas:\aae:\r * \ascale);
+\draw[|-|,draw=red, dashed] ($(\rightcx, \rightcy) + (\bas:\r*\bscale)$) arc (\bas:\bae:\r * \bscale);
+\draw[|-|,draw=red, dashed] ($(\rightcx, \rightcy) + (\cas:\r*\cscale)$) arc (\cas:\cae:\r * \cscale);
+\draw[|-|,draw=teal, dashed] ($(\rightcx, \rightcy) + (\das:\r*\ascale)$) arc (\das:\dae:\r * \ascale);
+\draw[|-|,draw=teal, dashed] ($(\rightcx, \rightcy) + (\eas:\r*\bscale)$) arc (\eas:\eae:\r * \bscale);
+\draw[|-|,draw=brown, dashed] ($(\rightcx, \rightcy) + (\fas:\r*\bscale)$) arc (\fas:\fae:\r * \bscale);
+\draw[|-|,draw=gray, dashed] ($(\rightcx, \rightcy) + (\gas:\r*\cscale)$) arc (\gas:\gae:\r * \cscale);
+\draw[|-|,draw=gray, dashed] ($(\rightcx, \rightcy) + (\has:\r*\ascale)$) arc (\has:\hae:\r * \ascale);
+
+\draw[fill opacity=0.2,fill=red, draw=red, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (360 + \hae:\r)$) arc (360 + \hae:\bae:\r) -- cycle;
+\draw[fill opacity=0.2,fill=teal, draw=teal, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (\bae:\r)$) arc (\bae:\eae:\r) -- cycle;
+\draw[fill opacity=0.2,fill=brown, draw=brown, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (\eae:\r)$) arc (\eae:\fae:\r) -- cycle;
+\draw[fill opacity=0.2, fill=gray, draw=gray, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (\fae:\r)$) arc (\fae:\hae:\r) -- cycle;
+
+\draw[draw=red, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (\bae:\r*\cscale + \r*0.1)$);
+\node[text=red, scale=0.75] at ($(\rightcx, \rightcy) + (\bae:\r*\cscale + \r*0.2)$) {$1$};
+
+\draw[draw=teal, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (\eae:\r*\cscale + \r*0.1)$);
+\node[text=teal, scale=0.75] at ($(\rightcx, \rightcy) + (\eae:\r*\cscale + \r*0.2)$) {$2$};
+
+\draw[draw=brown, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (\fae:\r*\cscale + \r*0.1)$);
+\node[text=brown, scale=0.75] at ($(\rightcx, \rightcy) + (\fae:\r*\cscale + \r*0.2)$) {$3$};
+\draw[draw=black, thick] (\rightcx, \rightcy) -- (\rightcx, \rightcy + \r * \cscale + 0.1 * \r);
+\node[text=black, scale=0.75] at (\rightcx, \rightcy + \r * \cscale + 0.2 * \r) {$s$};
+
+\end{tikzpicture}%
+    \end{figure}
+    
+    $M$개의 빔을 경계선 삼아서 전체 지점을 $M$개의 영역으로 나눌 수 있습니다. 
+    
+    경계선이 되는 빔은 두 영역 중 반시계방향에 있는 영역에 포함시킵니다.
+    
+    \end{proof}
+    
+\end{frame}
+
+\begin{frame}{\textbf{I}. 빛의 전사 크리퓨어}
+    
+    \begin{proof}
+    
+    \begin{figure}[h]
+\centering
+\begin{tikzpicture}[]
+\def \h {0.35}
+\def \r {1.25}
+\def \scale {0.016}
+\def \ascale {1.1}
+\def \bscale {1.2}
+\def \cscale {1.3}
+\def \as {0}
+\def \ae {108}
+\def \bs {25}
+\def \be {85}
+\def \cs {47}
+\def \ce {154}
+\def \ds {141}
+\def \de {245}
+\def \es {175}
+\def \ee {211}
+\def \fs {226}
+\def \fe {272}
+\def \gs {263}
+\def \ge {396}
+\def \hs {290}
+\def \he {340}
+\def \aas {70-\as}
+\def \aae {70-\ae}
+\def \bas {70-\bs}
+\def \bae {70-\be}
+\def \cas {70-\cs}
+\def \cae {70-\ce}
+\def \das {70-\ds}
+\def \dae {70-\de}
+\def \eas {70-\es}
+\def \eae {70-\ee}
+\def \fas {70-\fs}
+\def \fae {70-\fe}
+\def \gas {70-\gs}
+\def \gae {70-\ge}
+\def \has {70-\hs}
+\def \hae {70-\he}
+
+\def \rightcx {5.0}
+\def \rightcy {0.0}
+
+\draw (\rightcx, \rightcy) circle [radius=\r];
+
+\draw[fill opacity=0.2,fill=red, draw=red, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (360 + \hae:\r)$) arc (360 + \hae:\bae:\r) -- cycle;
+\draw[fill opacity=0.2,fill=teal, draw=teal, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (\bae:\r)$) arc (\bae:\eae:\r) -- cycle;
+\draw[fill opacity=0.2,fill=brown, draw=brown, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (\eae:\r)$) arc (\eae:\fae:\r) -- cycle;
+
+\draw[draw=red, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (\bae:\r*\cscale + \r*0.1)$);
+\node[text=red, scale=0.75] at ($(\rightcx, \rightcy) + (\bae:\r*\cscale + \r*0.2)$) {$1$};
+
+\draw[draw=teal, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (\eae:\r*\cscale + \r*0.1)$);
+\node[text=teal, scale=0.75] at ($(\rightcx, \rightcy) + (\eae:\r*\cscale + \r*0.2)$) {$2$};
+
+\draw[draw=brown, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (\fae:\r*\cscale + \r*0.1)$);
+\node[text=brown, scale=0.75] at ($(\rightcx, \rightcy) + (\fae:\r*\cscale + \r*0.2)$) {$3$};
+
+\draw[draw=black, thick] (\rightcx, \rightcy) -- (\rightcx, \rightcy + \r * \cscale + 0.1 * \r);
+\node[text=black, scale=0.75] at (\rightcx, \rightcy + \r * \cscale + 0.2 * \r) {$s$};
+
+\end{tikzpicture}%
+    \end{figure}
+    
+    맨 처음 발사한 빔과 마지막 빔 사이에 있는 영역 한 곳을 제외한 나머지 $M-1$개의 영역에는 반드시 빔이 한 개 이상 존재해야 합니다.
+    
+    이는 직선으로 문제를 전개한 뒤 답을 구하는 과정을 잘 생각해보시면 알 수 있습니다.
+    \end{proof}
+\end{frame}
+
+\begin{frame}{\textbf{I}. 빛의 전사 크리퓨어}
+    \begin{proof}
+    \begin{figure}[h]
+\centering
+\begin{tikzpicture}[]
+\def \h {0.35}
+\def \r {1.25}
+\def \scale {0.016}
+\def \ascale {1.1}
+\def \bscale {1.2}
+\def \cscale {1.3}
+\def \as {0}
+\def \ae {108}
+\def \bs {25}
+\def \be {85}
+\def \cs {47}
+\def \ce {154}
+\def \ds {141}
+\def \de {245}
+\def \es {175}
+\def \ee {211}
+\def \fs {226}
+\def \fe {272}
+\def \gs {263}
+\def \ge {396}
+\def \hs {290}
+\def \he {340}
+\def \aas {70-\as}
+\def \aae {70-\ae}
+\def \bas {70-\bs}
+\def \bae {70-\be}
+\def \cas {70-\cs}
+\def \cae {70-\ce}
+\def \das {70-\ds}
+\def \dae {70-\de}
+\def \eas {70-\es}
+\def \eae {70-\ee}
+\def \fas {70-\fs}
+\def \fae {70-\fe}
+\def \gas {70-\gs}
+\def \gae {70-\ge}
+\def \has {70-\hs}
+\def \hae {70-\he}
+
+\def \rightcx {5.0}
+\def \rightcy {0.0}
+
+\draw (\rightcx, \rightcy) circle [radius=\r];
+
+\draw[fill opacity=0.2,fill=red, draw=red, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (360 + \hae:\r)$) arc (360 + \hae:\bae:\r) -- cycle;
+\draw[fill opacity=0.2,fill=teal, draw=teal, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (\bae:\r)$) arc (\bae:\eae:\r) -- cycle;
+\draw[fill opacity=0.2,fill=brown, draw=brown, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (\eae:\r)$) arc (\eae:\fae:\r) -- cycle;
+
+\draw[draw=red, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (\bae:\r*\bscale)$);
+\node[text=red, scale=0.75] at ($(\rightcx, \rightcy) + (\bae:\r*\bscale + \r*0.1)$) {$1$};
+
+\draw[draw=teal, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (\eae:\r*\bscale)$);
+\node[text=teal, scale=0.75] at ($(\rightcx, \rightcy) + (\eae:\r*\bscale + \r*0.1)$) {$2$};
+
+\draw[draw=brown, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (\fae:\r*\bscale)$);
+\node[text=brown, scale=0.75] at ($(\rightcx, \rightcy) + (\fae:\r*\bscale + \r*0.1)$) {$3$};
+
+\draw[draw=black, thick] (\rightcx, \rightcy) -- (\rightcx, \rightcy + \r * \bscale);
+\node[text=black, scale=0.75] at (\rightcx, \rightcy + \r * \bscale + 0.1 * \r) {$s$};
+
+
+\draw[|-|,draw=red] ($(\rightcx, \rightcy) + (\bas:\r*\ascale)$) arc (\bas:\bae:\r * \ascale);
+\draw[draw=red, dashed, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (\bas:\r*1.0)$);
+
+\end{tikzpicture}%
+    \end{figure}
+    첫 발사 지점 바로 다음에 발사한 1번 지점에 의해 구분된 1번 영역(그림에서 빨간색으로 표시)에 최소 한개의 빔이 발사되어야 합니다.
+    
+    이는 어떤 구간이 1번 지점을 끝점으로 가졌고, 그 지점이 전체 구간의 끝점들 중 가장 작은 값이기 때문에 선택된 것입니다. 빨간색 영역 안에 빔이 하나도 발사되지 않았다면 해당 구간이 파괴되지 않기 때문에 모순입니다.
+    \end{proof}
+\end{frame}
+\begin{frame}{\textbf{I}. 빛의 전사 크리퓨어}
+    \begin{proof}
+    \begin{figure}[h]
+\centering
+\begin{tikzpicture}[]
+\def \h {0.35}
+\def \r {1.25}
+\def \scale {0.016}
+\def \ascale {1.1}
+\def \bscale {1.2}
+\def \cscale {1.3}
+\def \as {0}
+\def \ae {108}
+\def \bs {25}
+\def \be {85}
+\def \cs {47}
+\def \ce {154}
+\def \ds {141}
+\def \de {245}
+\def \es {175}
+\def \ee {211}
+\def \fs {226}
+\def \fe {272}
+\def \gs {263}
+\def \ge {396}
+\def \hs {290}
+\def \he {340}
+\def \aas {70-\as}
+\def \aae {70-\ae}
+\def \bas {70-\bs}
+\def \bae {70-\be}
+\def \cas {70-\cs}
+\def \cae {70-\ce}
+\def \das {70-\ds}
+\def \dae {70-\de}
+\def \eas {70-\es}
+\def \eae {70-\ee}
+\def \fas {70-\fs}
+\def \fae {70-\fe}
+\def \gas {70-\gs}
+\def \gae {70-\ge}
+\def \has {70-\hs}
+\def \hae {70-\he}
+
+\def \rightcx {5.0}
+\def \rightcy {0.0}
+
+\draw (\rightcx, \rightcy) circle [radius=\r];
+
+\draw[fill opacity=0.2,fill=red, draw=red, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (360 + \hae:\r)$) arc (360 + \hae:\bae:\r) -- cycle;
+\draw[fill opacity=0.2,fill=teal, draw=teal, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (\bae:\r)$) arc (\bae:\eae:\r) -- cycle;
+\draw[fill opacity=0.2,fill=brown, draw=brown, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (\eae:\r)$) arc (\eae:\fae:\r) -- cycle;
+
+\draw[draw=red, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (\bae:\r*\bscale)$);
+\node[text=red, scale=0.75] at ($(\rightcx, \rightcy) + (\bae:\r*\bscale + \r*0.1)$) {$1$};
+
+\draw[draw=teal, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (\eae:\r*\bscale)$);
+\node[text=teal, scale=0.75] at ($(\rightcx, \rightcy) + (\eae:\r*\bscale + \r*0.1)$) {$2$};
+
+\draw[draw=brown, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (\fae:\r*\bscale)$);
+\node[text=brown, scale=0.75] at ($(\rightcx, \rightcy) + (\fae:\r*\bscale + \r*0.1)$) {$3$};
+
+\draw[draw=black, thick] (\rightcx, \rightcy) -- (\rightcx, \rightcy + \r * \bscale);
+\node[text=black, scale=0.75] at (\rightcx, \rightcy + \r * \bscale + 0.1 * \r) {$s$};
+
+
+\draw[|-|,draw=teal] ($(\rightcx, \rightcy) + (\eas:\r*\ascale)$) arc (\eas:\eae:\r * \ascale);
+\draw[draw=teal, dashed, thick] (\rightcx, \rightcy) -- ($(\rightcx, \rightcy) + (\eas:\r*1.0)$);
+
+\end{tikzpicture}%
+    \end{figure}
+    
+    1번 영역에서 최소 한개의 빔을 발사한 논리가 그 다음 빔에 의해 생긴 영역에서도 똑같이 적용됩니다.
+    
+    따라서 전체의 답은 $M-1$ 이상이여야 합니다.
+    \end{proof}
+\end{frame}
+
+\begin{frame}{\textbf{I}. 빛의 전사 크리퓨어}
+    \textcolor{ucpc-orange}{Lemma 1} 증명과정에서 보다보면, $M-1$ 개의 영역에는 빔이 무조건 한개 있어야한다는 내용이 있습니다.
+
+    전체 구간 끝점의 개수가 $N$개 이므로 비둘기집의 원리로 첫 발사 지점 후보를 $N/(M-1)$개 이하로 추출해낼 수 있습니다.
+    
+    그리고 \textcolor{ucpc-orange}{Lemma 2}에 의해서 이들 중 하나가 정답이 됩니다.
+    
+    이대로 풀어도 정답이 나옵니다.
+    
+    \vspace{18pt}
+    
+    하지만 코드를 조금 더 간단하게 만들 수 없을까 싶어서 고민하다보니
+    
+    \textcolor{ucpc-orange}{Lemma 3} \~{} \textcolor{ucpc-orange}{Lemma 6} 까지 확장을 할 수 있었습니다.
+\end{frame}
+
+\begin{frame}{\textbf{I}. 빛의 전사 크리퓨어}
+    최종적으로 총 시간복잡도는 \complexity{N \log N}입니다.
+    
+    \vspace{36pt}
+    
+    출제자는 사전지식이 필요없는 풀이를 증명하는데 2\~{}3주가 걸렸지만
+    
+    응시자 여러분들은 다 젋고 똑똑하니까 5시간안에 증명해내거나, 혹은 증명을 못했더라도 믿음을 가지고 제출을 해볼 것이라 생각했기 때문에 맘편히 출제했습니다.
+\end{frame}

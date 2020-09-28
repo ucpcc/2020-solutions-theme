@@ -1,0 +1,161 @@
+\section{H. 레이저 연구소}
+
+\begin{frame} % No title at first slide
+    \sectiontitle{H}{레이저 연구소}
+    \sectionmeta{
+        \texttt{number\_theory}\\
+        출제진 의도 -- \textbf{\color{acdiamond}Challenging}
+    }
+    \begin{itemize}
+        \item 제출 29번, 정답 4팀 (정답률 13.79\%)
+        \item 처음 푼 팀: \textbf{귀여운 승한이팀} (tae826, rkm0959, pasa3232), 58분
+        \item 출제자: \texttt{ahgus89}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\textbf{H}. 레이저 연구소}
+    $(0, 0)$에서 $(n, m)$으로 레이저를 쏘는 경우를 생각해봅시다.
+
+    \vspace{18pt}
+    
+    레이저가 진행하며 $x$좌표가 $n$번, $y$좌표가 $m$번 증가해야 합니다. 
+    
+    \vspace{18pt}
+    \begin{itemize}
+        \item $x$축에 평행한 벽을 뚫을 때 마다 $y$좌표의 정수부분이 $1$ 증가합니다.
+        \item $y$축에 평행한 벽을 뚫을 때 마다 $x$좌표의 정수부분이 $1$ 증가합니다.
+        \item 건물을 뚫을 때 마다 $x$좌표와 $y$좌표의 정수부분이 동시에 $1$ 증가합니다.
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{\textbf{H}. 레이저 연구소}
+    시작점을 제외하고 뚫는 건물의 개수는 직선 $y={m \over n}x$ 에서 $0 < x \leq n$인 격자점 개수이므로, $\operatorname{gcd}(n, m)$개가 됩니다.
+    
+    \vspace{18pt}
+    
+    건물을 $\operatorname{gcd}(n, m)$개 뚫으므로 $x$축에 평행한 벽은 $m-\operatorname{gcd}(n, m)$개, $y$축에 평행한 벽은 $n-\operatorname{gcd}(n, m)$개를 뚫게 됩니다. 
+    
+    \vspace{18pt} 
+     
+    시작점까지 포함해 건물의 수리비는 $A(\operatorname{gcd}(n, m)+1)$원, 벽의 수리비는 $B(n+m-2\operatorname{gcd}(n, m))$원이 됩니다.
+    
+\end{frame}
+
+\begin{frame}{\textbf{H}. 레이저 연구소}
+    시작점을 $(0, 0)$으로 고정하고 레이저를 쏘는 경우의 총 수리비를 $f(n, m)$이라 합시다. 
+    
+    \vspace{18pt}
+
+    $f(n, m) = \displaystyle \sum_{i=1}^{n} \displaystyle \sum_{j=1}^{m} \left(A+B(n+m) + (A-2B)\operatorname{gcd}(n, m)\right) = Anm + Bnm(n+m+2)/2 + (A-2B) \displaystyle \sum_{i=1}^{n} \displaystyle \sum_{j=1}^{m} \operatorname{gcd}(n, m)$ 이 됩니다.
+    
+    \vspace{18pt}
+    
+    $\displaystyle \sum_{i=1}^{n} \displaystyle \sum_{j=1}^{m} \operatorname{gcd}(n, m) = \displaystyle \sum_{d=1}^{\infty} \left\lfloor{n \over d}\right\rfloor\left\lfloor{m \over d}\right\rfloor \phi(d)$임이 알려져 있습니다. 대입하면 다음과 같습니다.
+    
+\end{frame}
+
+\begin{frame}{\textbf{H}. 레이저 연구소}
+    $$f(n, m) = Anm + Bnm(n+m+2)/2 + (A-2B) \displaystyle \sum_{d=1}^{\infty} \left\lfloor{n \over d}\right\rfloor\left\lfloor{m \over d}\right\rfloor \phi(d)$$
+
+    \vspace{18pt}
+    
+    시작점은 $(0, 0)$부터 $(n, m)$까지 모든 점이 가능하고, 이때 축에 평행한 방향을 제외하고 레이저를 쏘게 됩니다. 
+    
+    \vspace{18pt}
+    
+    시작점을 $(x, y)$라고 하면 제1, 2, 3, 4사분면 방향으로 쏘는 경우의 총 수리비는 각각 $f(n-x, m-y)$, $f(x, m-y)$, $f(x, y)$, $f(n-x, y)$가 됩니다. 총 수리비를 $ans$라 두고 식을 전개하면 다음과 같습니다.
+    
+\end{frame}
+
+\begin{frame}{\textbf{H}. 레이저 연구소}
+    $$ans= \displaystyle \sum_{x=1}^{n} \displaystyle \sum_{y=1}^{m} (f(n-x, m-y)+f(x, m-y)+f(x, y)+f(n-x, y))$$
+
+    \vspace{18pt}
+    
+    $$ans= 4\displaystyle \sum_{x=1}^{n} \displaystyle \sum_{y=1}^{m} f(x, y)$$
+    
+    \vspace{18pt}
+    
+    $$ans= 4A\displaystyle \sum_{x=1}^{n} \displaystyle \sum_{y=1}^{m} xy + 4B\displaystyle \sum_{x=1}^{n} \displaystyle \sum_{y=1}^{m} {xy(x+y+2) \over 2} + 4(A-2B)\displaystyle \sum_{x=1}^{n} \displaystyle \sum_{y=1}^{m} \displaystyle \sum_{d=1}^{\infty} \left\lfloor{x \over d}\right\rfloor\left\lfloor{y \over d}\right\rfloor \phi(d)$$
+
+    \vspace{18pt}
+\end{frame}
+
+\begin{frame}{\textbf{H}. 레이저 연구소}
+    
+
+    $$ans= An(n+1)m(m+1) + B\bigg({n(n+1)m(m+1)(n+m+1) \over 3} + n(n+1)m(m+1)\bigg)$$
+    $$+ 4(A-2B)\displaystyle \sum_{x=1}^{n} \displaystyle \sum_{y=1}^{m} \displaystyle \sum_{d=1}^{\infty} \left\lfloor{x \over d}\right\rfloor\left\lfloor{y \over d}\right\rfloor \phi(d)$$
+
+    \vspace{18pt}
+
+    앞 2개의 항은 $O(1)$에 쉽게 계산할 수 있습니다. $\displaystyle \sum_{x=1}^{n} \displaystyle \sum_{y=1}^{m} \displaystyle \sum_{d=1}^{\infty} \left\lfloor{x \over d}\right\rfloor\left\lfloor{y \over d}\right\rfloor \phi(d)$를 계산하는 것에 집중합시다.
+
+\end{frame}
+
+\begin{frame}{\textbf{H}. 레이저 연구소}
+    합의 순서를 바꾸어 $d$를 기준으로 합을 구하는 것으로 생각합시다. $\displaystyle \sum_{d=1}^{\infty} \displaystyle \sum_{x=1}^{n} \displaystyle \sum_{y=1}^{m} \left\lfloor{x \over d}\right\rfloor\left\lfloor{y \over d}\right\rfloor \phi(d)$를 구하면 됩니다.
+
+    \vspace{18pt}
+
+    $\left\lfloor{x \over d}\right\rfloor$는 $y$에 무관하고, $\phi(d)$는 $x, y$에 무관하므로 상수를 밖으로 빼면 다음과 같습니다.
+
+    \vspace{18pt}
+
+    $$\displaystyle \sum_{d=1}^{\infty} \phi(d) \displaystyle \sum_{x=1}^{n} \left\lfloor{x \over d}\right\rfloor \displaystyle \sum_{y=1}^{m} \left\lfloor{y \over d}\right\rfloor$$
+\end{frame}
+
+\begin{frame}{\textbf{H}. 레이저 연구소}
+    $\displaystyle \sum_{x=1}^{n} \left\lfloor{x \over d}\right\rfloor$은 $0$부터 $\left\lfloor{n \over d}\right\rfloor-1$까지의 값은 $d$번씩 더해지고, $\left\lfloor{n \over d}\right\rfloor$는 $n-d\left\lfloor{n \over d}\right\rfloor+1$번 더해지는 값입니다.
+    
+    \vspace{18pt}
+
+    따라서 $\displaystyle \sum_{x=1}^{n} \left\lfloor{x \over d}\right\rfloor = {d(\left\lfloor{n \over d}\right\rfloor-2)(\left\lfloor{n \over d}\right\rfloor-1) \over 2} + (n-d\left\lfloor{n \over d}\right\rfloor+1)\left\lfloor{n \over d}\right\rfloor$이고, 
+    
+    정리하면 $(n+1)\left\lfloor{n \over d}\right\rfloor-d{\left\lfloor{n \over d}\right\rfloor(\left\lfloor{n \over d}\right\rfloor+1) \over 2}$가 됩니다.
+    
+    \vspace{18pt}
+    
+    마찬가지로 $\displaystyle \sum_{y=1}^{m} \left\lfloor{y \over d}\right\rfloor = (m+1)\left\lfloor{m \over d}\right\rfloor-d{\left\lfloor{m \over d}\right\rfloor(\left\lfloor{m \over d}\right\rfloor+1) \over 2}$입니다. 이를 대입하여 정리합시다.
+\end{frame}
+
+\begin{frame}{\textbf{H}. 레이저 연구소}
+    $$\displaystyle \sum_{d=1}^{\infty} \phi(d)((n+1)\left\lfloor{n \over d}\right\rfloor-d{\left\lfloor{n \over d}\right\rfloor(\left\lfloor{n \over d}\right\rfloor+1) \over 2})((m+1)\left\lfloor{m \over d}\right\rfloor-d{\left\lfloor{m \over d}\right\rfloor(\left\lfloor{m \over d}\right\rfloor+1) \over 2})$$
+
+    \vspace{18pt}
+    
+    \begin{multline}
+    \displaystyle \sum_{d=1}^{\infty} \phi(d)\left\lfloor{n \over d}\right\rfloor\left\lfloor{m \over d}\right\rfloor \Bigg( (n+1)(m+1) \\
+    -d{( (n+1)(\left\lfloor{m \over d}\right\rfloor+1) + (m+1)(\left\lfloor{n \over d}\right\rfloor+1) ) \over 4} \\
+    +d^{2}{(\left\lfloor{n \over d}\right\rfloor+1)(\left\lfloor{m \over d}\right\rfloor+1) \over 4} \Bigg) 
+    \end{multline}
+
+\end{frame}
+    
+\begin{frame}{\textbf{H}. 레이저 연구소}
+    식은 복잡하게 생겼지만, 곱셈함수인 $\phi(d), d\phi(d), d^{2}\phi(d)$와 $\left\lfloor{n \over d}\right\rfloor, \left\lfloor{m \over d}\right\rfloor$에 대한 식의 합과 곱으로만 이루어져 있습니다. 이는 Dirichlet convolution(xudyh's sieve)를 이용해 $O(n^{2/3})$ 시간에 계산할 수 있고, 전체 문제 역시 $O(n^{2/3})$ 시간에 풀 수 있습니다.
+    
+    \vspace{18pt}
+    
+    $f(n) = \phi(n), n\phi(n), n^{2}\phi(n)$는 각각 $g(n) = 1, n, n^2$와의 Dirichlet convolution으로 $n, n^2, n^3$이 되어 합을 $O(1)$에 계산할 수 있습니다.
+
+\end{frame}    
+
+\begin{frame}{\textbf{H}. 레이저 연구소}
+    두 산술함수 $f(n), g(n)$의 Dirichlet Convolution은 $f\ast g(n) = \displaystyle \sum_{d \vert n} f(d)g\left({n\over d}\right)$로 정의합니다.
+    
+    \vspace{18pt}
+    
+    $\displaystyle \sum_{i=1}^{n} f(i) = s_{f}(n), \displaystyle \sum_{i=1}^{n} g(i) = s_{g}(n), \displaystyle \sum_{i=1}^{n} f\ast g(i) = s_{f\astg}(n)$ 라고 하면
+
+    \vspace{18pt}
+    
+    $s_{f}(n) = {{s_{f\astg}(n)-\displaystyle \sum_{d=2}^{n} s_{f}\left(\left\lfloor{n \over d}\right\rfloor\right)g(d)} \over {g(1)}}$가 됩니다.
+\end{frame}
+
+\begin{frame}{\textbf{H}. 레이저 연구소}
+    $s_{f\ast g}(n), s_{g}(n)$을 $O(1)$에 계산할 수 있다면 $s_{f}(n)$은 재귀적으로 $O(n^{3/4})$ 시간에 구할 수 있고, 구현에 따라 AC를 받을 수 있습니다.
+    
+    $i \leq n^{2/3}$ 범위에서 $f(i)$를 전처리해두면 $O(n^{2/3})$ 시간에 문제를 풀 수 있고, 넉넉히 AC를 받을 수 있습니다.
+\end{frame}

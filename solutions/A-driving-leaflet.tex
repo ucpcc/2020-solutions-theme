@@ -1,0 +1,24 @@
+\section{A. 전단지 돌리기}
+
+\begin{frame} % No title at first slide
+    \sectiontitle{A}{전단지 돌리기}
+    \sectionmeta{
+        \texttt{bfs, dfs}\\
+        출제진 의도 -- \textbf{\color{acgold}Easy}
+    }
+    \begin{itemize}
+        \item 제출 423번, 정답 147팀 (정답률 35.70\%)
+        \item 처음 푼 팀: \textbf{여기가월파2020인가요} (월파, 치러, 왔어요), 3분
+        \item 출제자: \texttt{cyberflower}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\textbf{A}. 전단지 돌리기}
+    \begin{itemize}
+        \item 거리가 $D$ 이상인 자식 노드가 있는 노드는 방문해야 합니다.
+        \item 아니라면 방문할 필요가 없습니다.
+        \item 트리이므로 방문해야 할 정점이 $m$개이면 $\max(2m-2, 0)$이 답이 됩니다.
+        \item dfs, bfs 등 트리 탐색을 이용하면 \complexity{N} 에 해결할 수 있습니다. 
+
+    \end{itemize}
+\end{frame}
