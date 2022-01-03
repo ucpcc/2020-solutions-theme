@@ -4,15 +4,23 @@ UCPC 2020 솔루션 및 beamer 테마
 
 Based on:
 - [Execushares](https://github.com/hamaluik/Beamer-Theme-Execushares)
-- [Sogang ICPC Team](https://acm.soagng.ac.kr) 강의 자료
+- [Sogang ICPC Team](https://acm.sogang.ac.kr) 강의 자료
 
 풀이의 저작권은 각 문제 작성자에게 있습니다.
 
 ## 테마 사용 예
 
-- [UCPC 2020](main.pdf)
-- [SUAPC 2020](https://upload.acmicpc.net/789ee426-cf86-40fa-aa64-733c50e96539/)
-- [SNUPC 2020](https://snups.snucse.org/snupc2020/solution.pdf)
+- [UCPC 2020](main.pdf), [2021](https://ucpc.me/assets/ucpc21-finals-solutions.pdf)
+- [SUAPC 2020](https://upload.acmicpc.net/789ee426-cf86-40fa-aa64-733c50e96539/) (신촌 동아리 연합)
+
+- [SNUPC 2020](https://snups.snucse.org/snupc2020/solution.pdf), [2021](https://snups.snucse.org/snupc2021/solution.pdf) (서울대학교)
+- [SPC 2020](https://acm.sogang.ac.kr/spc/contest/2020/solutions.pdf), [2021](https://acm.sogang.ac.kr/spc/contest/2021/solutions.pdf) (서강대학교)
+- [홍익대학교 2021](https://upload.acmicpc.net/2060837f-4598-4a67-909b-e3a75dba84c2/)
+
+- [나는코더다 송년대회 2021](https://upload.acmicpc.net/8294438f-1337-4d1d-9105-4c8d0f4f45fb/) (경기과학고)
+- [천하제일 코딩대회 2021](https://github.com/justiceHui/Sunrin-Contest/tree/main/Sunrin-OI-2021) (선린인터넷고)
+- [Good Bye, BOJ 2021!](https://upload.acmicpc.net/d585ae16-b11e-4535-8974-ec9093885f9a/)
+- [Semi-Game Cup 2021](https://upload.acmicpc.net/c6c814cb-c079-40e1-b2b1-6d21e99b3e9a/)
 
 ## 참고
 
