@@ -10,7 +10,7 @@ Based on:
 
 ## 테마 사용 예
 
-- [UCPC 2020](main.pdf), [2021](https://ucpc.me/assets/ucpc21-finals-solutions.pdf)
+- [UCPC 2020](main.pdf), [2021](https://2021.ucpc.me/assets/ucpc21-finals-solutions.pdf)
 - [SUAPC 2020](https://upload.acmicpc.net/789ee426-cf86-40fa-aa64-733c50e96539/) (신촌 동아리 연합)
 
 - [SNUPC 2020](https://snups.snucse.org/snupc2020/solution.pdf), [2021](https://snups.snucse.org/snupc2021/solution.pdf) (서울대학교)
